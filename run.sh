@@ -1,3 +1,6 @@
+docker network create test-atlas
+docker run --name redis -d --network test-atlas redis -p localhost:6379:6379
+
 docker rm atlasA1 atlasB1 --force
 docker run -dt --network test-atlas --name=atlasA1 -p 5755:5755/udp -p 57555:57555/udp -p 27000:27000 \
 -v ~/atlasserver:/mnt/atlas-server  \
