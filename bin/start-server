@@ -13,22 +13,10 @@ redis-server /mnt/atlas-server/AtlasTools/RedisDatabase/redis.conf >>/mnt/atlas-
 Xvfb :20 -screen 0 1366x768x16 >>/mnt/atlas-server/Xvfb.log 2>&1 &
 # x11vnc -passwd TestVNC -display :20 -N -forever &
 x11vnc -display :20 -passwd noentryplz -N -forever >>/mnt/atlas-server/x11vnc.log 2>&1 &
-echo
-echo
-echo "##########################################"
-echo "VNC server started on port 5920"
-echo "To debug and check for server errors, connect"
-echo "via a VNC client."
-echo "##########################################"
-echo
 sleep 1
 xterm > /dev/null 2>&1 &
 wine /mnt/atlas-server/ShooterGame/Binaries/Win64/ShooterGameServer.exe "$@"
 echo
-echo
 echo "##########################################"
 echo "Atlas Server was stopped, press CTRL-C to exit"
-echo "Check IP:5920 via VNC to check for errors."
 echo "##########################################"
-echo
-wait

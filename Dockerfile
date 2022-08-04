@@ -2,12 +2,10 @@ FROM ubuntu
 
 # user / group args
 ARG UNAME=wine
-ARG UID=1000
-ARG GID=1000
 
 # create wine user
-RUN groupadd -g ${GID} -o ${UNAME}
-RUN useradd -u ${UID} -g ${GID} -d /home/${UNAME} -m -s /bin/bash ${UNAME}
+RUN groupadd -g 1000 -o ${UNAME}
+RUN useradd -u 1000 -g 1000 -d /home/${UNAME} -m -s /bin/bash ${UNAME}
 ENV HOME /home/${UNAME}
 WORKDIR /home/${UNAME}
 
@@ -33,9 +31,7 @@ RUN apt-get update && \
     update-locale LANG=en_US.UTF-8 && \
     # basic deps
     apt-get install -y --no-install-recommends gpg-agent software-properties-common apt-transport-https wget && \
-    apt-get install -y --no-install-recommends xvfb x11vnc xterm && \
-    # redis
-    apt-get install -y --no-install-recommends redis && \
+    apt-get install -y --no-install-recommends xvfb xterm && \
     # add wine ppas
     wget -nc https://dl.winehq.org/wine-builds/winehq.key && \
     apt-key add winehq.key && \
@@ -59,12 +55,6 @@ RUN apt-get update && \
 # locale env
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
-
-# VNC env
-ENV DISPLAY :20
-
-#Expose port 5920 to view display using VNC Viewer
-EXPOSE 5920
 
 CMD ["install-server"]
 
